@@ -3,7 +3,7 @@
 		
 		public function getAlldata() {
 			$data = $this->db->get("categories");
-			return $data->result();
+			return $data->result_array();
 		}
 	}
 ?>
