@@ -63,6 +63,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		border: 1px solid #D0D0D0;
 		box-shadow: 0 0 8px #D0D0D0;
 	}
+	
+	#input {
+		border: 1px solid #D0D0D0;
+		margin: 5px;
+		width: 200px;
+	}
+	
+	#input:focus {
+		box-shadow: 0 0 8px #D0D0D0;
+	}
+	
+	button {
+		width: 80px;
+		margin: 5px;
+	}
+	
+	#tabel {
+		width: 100%;
+	}
 	</style>
 </head>
 <body>
