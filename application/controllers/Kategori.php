@@ -11,7 +11,8 @@ class Kategori extends CI_Controller {
 		$this->load->view('footer');
 	}
 	
-	public function tabel() {
+	public function tabel() 
+	{
 		$no = 1;
 		$js = 'return confirm("Apakah anda yakin akan menghapus?")';
 		$data = $this->kategori->getAlldata();
@@ -46,8 +47,10 @@ class Kategori extends CI_Controller {
 		$this->load->view('footer');
 	}
 	
-	public function proses($mode) {
-		if($mode=='tambah') {
+	public function proses($mode) 
+	{
+		$this->upload();
+		if($mode=='tambah') {	
 			$this->kategori->input();
 			redirect('../');
 		}else if($mode=='edit') {
@@ -56,6 +59,19 @@ class Kategori extends CI_Controller {
 		}else if($mode=='hapus') {
 			$this->kategori->hapus($this->uri->segment(4));
 			redirect('../');
+		}
+	}
+	
+	public function upload()
+	{
+		$config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['encrypt_name'] = TRUE;
+		$this->upload->initialize($config);
+		if(!$this->upload->do_upload('file')){
+			echo $this->upload->display_errors();
+		} else {
+			$this->upload->data();
 		}
 	}
 }

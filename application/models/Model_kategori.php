@@ -16,6 +16,7 @@
 			$data['CategoryID'] = $this->input->post('id');
 			$data['CategoryName'] = $this->input->post('nama');
 			$data['Description'] = $this->input->post('des');
+			$data['Picture'] = $this->upload->data('file_name');
 			
 			$this->db->insert('categories',$data);
 		}
