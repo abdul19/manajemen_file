@@ -1,9 +1,15 @@
 # manajemen_file
 Tugas 2 manajemen File Aplikasi Web Dinamis Lanjut 12131282
 
+-----------------------------------------------------------------------------
+
 hello world :D
 
+-----------------------------------------------------------------------------
+
 pertama kali nih pake git :v
+
+-----------------------------------------------------------------------------
 
 soal:
 Judul : Tugas 2 Manajemen File
@@ -28,3 +34,10 @@ Klas B : 07.45 - 09.15 : Modul produk
 Nilai maksimal 35 apabila dikumpulkan melalui link repository github
 
 Nilai maksimal 20 apabila dikumpulkan file pdf yang berisi screenshot dan fileprogram
+
+-----------------------------------------------------------------------------
+
+info:
+framework : CodeIgniter-3.0.3
+database  : northwind 
+css       : css bawaan CI (ditambahi dikit :v)
