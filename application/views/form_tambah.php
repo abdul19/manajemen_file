@@ -1,7 +1,7 @@
 	<h1 align="center">Tambah Kategori</h1>
 
 	<div id="body">
-		<form action="<?php echo base_url();?>proses/tambah" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+		<form action="<?php echo site_url('kategori/proses/tambah');?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
 				<table>
 					<input type="hidden" name='id' value="">
 					<tr>

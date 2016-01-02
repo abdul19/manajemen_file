@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>List Kategori</title>
+	<title>Tugas 2 Aplikasi Web Dinamis Lanjut</title>
 
 	<style type="text/css">
 

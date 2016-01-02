@@ -1,7 +1,7 @@
 	<h1 align="center">Edit Kategori</h1>
 
 	<div id="body">
-		<form name="tambah" method="post" action="<?php echo base_url();?>proses/edit">
+		<form name="tambah" method="post" action="<?php echo site_url('kategori/proses/edit');?>">
 				<table>
 					<input type="hidden" name='id' value="<?php echo $CategoryID; ?>">
 					<tr>

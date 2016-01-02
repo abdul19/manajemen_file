@@ -15,14 +15,27 @@ class Kategori extends CI_Controller {
 	{
 		$no = 1;
 		$js = 'return confirm("Apakah anda yakin akan menghapus?")';
+		
 		$data = $this->kategori->getAlldata();
 		$this->table->set_heading('No','Nama Kategori', 'Deskripsi','Gambar','Action');
+		
 		foreach($data as $isi):
-			$link = "<a href='".base_url()."edit/".$isi['CategoryID']."'><button>Edit</button></a><br>";
-			$link .= "<a href='".base_url()."proses/hapus/".$isi['CategoryID']."' ><button onclick='".$js."'>Hapus</button></a>";
-			$this->table->add_row($no, $isi['CategoryName'], $isi['Description'], $isi['Picture'], $link);
+			$link = "<a href='".site_url('kategori/edit')."/".$isi['CategoryID']."'><button>Edit</button></a><br>";
+			$link .= "<a href='".site_url('kategori/proses/hapus')."/".$isi['CategoryID']."' ><button onclick='".$js."'>Hapus</button></a>";
+			
+			if($isi['Picture']) {
+				$thumb = str_replace(".","_thumb.",$isi['Picture']);
+				$picture = "<a href='".site_url('kategori/gambar')."/".$isi['Picture']."'>";
+				$picture .= "<img src='".base_url('uploads')."/".$thumb."' >";
+				$picture .= "</a>";
+			} else {
+				$picture = "No Picture";
+			}
+			
+			$this->table->add_row($no, $isi['CategoryName'], $isi['Description'], $picture, $link);
 			$no++;
 		endforeach;
+		
 		$template = array('table_open' => '<table border="1" id="tabel" cellpadding="4" cellspacing="0">');
 		$this->table->set_template($template);
 		
@@ -50,28 +63,90 @@ class Kategori extends CI_Controller {
 	public function proses($mode) 
 	{
 		$this->upload();
-		if($mode=='tambah') {	
-			$this->kategori->input();
-			redirect('../');
+		if($mode=='tambah') {
+			//proses tambah data ke database
+			if(!$this->upload->do_upload('file')){
+				//jika gagal upload
+				echo $this->upload->display_errors();
+				echo anchor(site_url("kategori/tambah"),'Kembali');
+			} else {
+				//jika berhasil upload
+				$gambar = $this->upload->data('file_name');
+				$error = $this->watermark($gambar);
+				$error .= $this->resize($gambar);
+				
+				if(!$error) {
+					//jika berhasil resize n watermark
+					$this->kategori->input();
+					redirect(base_url());
+				} else {
+					//jika gagal resize n watermark
+					echo $error;
+					echo anchor(site_url("kategori/tambah"),'kembali');
+				}
+			}
 		}else if($mode=='edit') {
+			//proses edit data pada database
 			$this->kategori->edit();
-			redirect('../');
+			redirect(base_url());
 		}else if($mode=='hapus') {
 			$this->kategori->hapus($this->uri->segment(4));
-			redirect('../');
+			redirect(base_url());
 		}
 	}
 	
 	public function upload()
 	{
-		$config['upload_path'] = './uploads/';
-		$config['allowed_types'] = 'gif|jpg|png';
+		$config['upload_path'] = './uploads';
+		$config['allowed_types'] = 'gif|jpg|jpeg|png';
 		$config['encrypt_name'] = TRUE;
 		$this->upload->initialize($config);
-		if(!$this->upload->do_upload('file')){
-			echo $this->upload->display_errors();
-		} else {
-			$this->upload->data();
+	}
+	
+	public function gambar($picture)
+	{
+		$gambar['gambar'] = $picture;
+		$this->load->view('header');
+		$this->load->view('lihat_gambar',$gambar);
+		$this->load->view('footer');
+	}
+	
+	public function resize($gambar)
+	{
+		$this->image_lib->clear();
+		$config['image_library'] = 'gd2';
+		$config['source_image'] = './uploads/'.$gambar;
+		$config['new_image'] = './uploads';
+		$config['create_thumb'] = TRUE;
+		$config['maintain_ratio'] = TRUE;
+		$config['width'] = 100;
+		$config['height'] = 100;
+		
+		$this->image_lib->initialize($config);
+		if (!$this->image_lib->resize())
+		{
+			return 'Gagal resize gambar<br/>'.$this->image_lib->display_errors();
+		}
+	}
+	
+	public function watermark($gambar)
+	{
+		$config['image_library'] = 'gd2';
+		$config['source_image'] = './uploads/'.$gambar;
+		$config['new_image'] = './uploads';
+		$config['wm_text'] = '12131282';
+		$config['wm_type'] = 'text';
+		$config['wm_font_path'] = './system/fonts/texb.ttf';
+		$config['wm_font_size'] = '16';
+		$config['wm_font_color'] = 'ffffff';
+		$config['wm_vrt_alignment'] = 'middle';
+		$config['wm_hor_alignment'] = 'center';
+		$config['wm_padding'] = '20';
+
+		$this->image_lib->initialize($config);
+		if (!$this->image_lib->watermark())
+		{
+			return 'Gagal watermark gambar<br/>'.$this->image_lib->display_errors();
 		}
 	}
 }
