@@ -21,10 +21,8 @@
 			$this->db->insert('categories',$data);
 		}
 		
-		public function edit() {
+		public function edit($data) {
 			$id = $this->input->post('id');
-			$data['CategoryName'] = $this->input->post('nama');
-			$data['Description'] = $this->input->post('des');
 			
 			$this->db->where('CategoryID',$id);
 			$this->db->update('categories',$data);

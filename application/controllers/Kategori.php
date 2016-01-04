@@ -20,8 +20,8 @@ class Kategori extends CI_Controller {
 		$this->table->set_heading('No','Nama Kategori', 'Deskripsi','Gambar','Action');
 		
 		foreach($data as $isi):
-			$link = "<a href='".site_url('kategori/edit')."/".$isi['CategoryID']."'><button>Edit</button></a><br>";
-			$link .= "<a href='".site_url('kategori/proses/hapus')."/".$isi['CategoryID']."' ><button onclick='".$js."'>Hapus</button></a>";
+			$link = anchor(site_url('kategori/edit')."/".$isi['CategoryID'],"<button>Edit</button></a><br/>");
+			$link .= anchor(site_url('kategori/proses/hapus')."/".$isi['CategoryID'],"<button onclick='".$js."'>Hapus</button></a>");
 			
 			if($isi['Picture']) {
 				$thumb = str_replace(".","_thumb.",$isi['Picture']);
@@ -62,9 +62,10 @@ class Kategori extends CI_Controller {
 	
 	public function proses($mode) 
 	{
-		$this->upload();
 		if($mode=='tambah') {
 			//proses tambah data ke database
+			
+			$this->upload();
 			if(!$this->upload->do_upload('file')){
 				//jika gagal upload
 				echo $this->upload->display_errors();
@@ -87,9 +88,30 @@ class Kategori extends CI_Controller {
 			}
 		}else if($mode=='edit') {
 			//proses edit data pada database
-			$this->kategori->edit();
+			
+			$this->upload();
+			if($this->upload->do_upload('file')) {
+				// jika upload gambar
+				$gambar = $this->upload->data('file_name');
+				$error = $this->watermark($gambar);
+				$error .= $this->resize($gambar);
+				if(!$error) {
+					//jika berhasil resize n watermark
+					$data['Picture'] = $gambar;
+				} else {
+					//jika gagal resize n watermark
+					echo $error;
+					echo anchor(site_url("kategori/tambah"),'kembali');
+				}
+			}
+			
+			$data['CategoryName'] = $this->input->post('nama');
+			$data['Description'] = $this->input->post('des');
+			
+			$this->kategori->edit($data);
 			redirect(base_url());
 		}else if($mode=='hapus') {
+			//proses edit data pada database
 			$this->kategori->hapus($this->uri->segment(4));
 			redirect(base_url());
 		}
@@ -137,7 +159,7 @@ class Kategori extends CI_Controller {
 		$config['wm_text'] = '12131282';
 		$config['wm_type'] = 'text';
 		$config['wm_font_path'] = './system/fonts/texb.ttf';
-		$config['wm_font_size'] = '16';
+		$config['wm_font_size'] = '20';
 		$config['wm_font_color'] = 'ffffff';
 		$config['wm_vrt_alignment'] = 'middle';
 		$config['wm_hor_alignment'] = 'center';

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 02 Jan 2016 pada 18.30
+-- Generation Time: 04 Jan 2016 pada 13.47
 -- Versi Server: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `Description` varchar(255) DEFAULT NULL,
   `Picture` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`CategoryID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data untuk tabel `categories`
@@ -44,8 +44,10 @@ INSERT INTO `categories` (`CategoryID`, `CategoryName`, `Description`, `Picture`
 (3, 'Confections', 'Desserts, candies, and sweet breads', ''),
 (4, 'Dairy Productio', 'Cheeses', ''),
 (5, 'Grains and Cere', 'Breads, crackers, pasta, and cerealist', ''),
-(6, 'Web Dinamis', 'Siswa El rahma kelas malam ohw yes', NULL),
-(15, 'test', 'upload', 'ae163d82e6187d1b475d02cf4bcc1127.jpg');
+(15, 'test', 'upload', 'ae163d82e6187d1b475d02cf4bcc1127.jpg'),
+(16, 'test', 'lagi', 'e29b377a255f2171ea1de5fbc8567445.PNG'),
+(17, 'itui test edit', 'test edit', '463566d37e5b7c1b384b021d9b3570a3.jpg'),
+(18, 'test', 'xml/sdv.mksd', '0f74a877a5043e8c8666943fd0cb5a84.PNG');
 
 -- --------------------------------------------------------
 
