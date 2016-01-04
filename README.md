@@ -38,6 +38,13 @@ Nilai maksimal 20 apabila dikumpulkan file pdf yang berisi screenshot dan filepr
 -----------------------------------------------------------------------------
 
 info:
+
 framework : CodeIgniter-3.0.3
+
 database  : northwind 
+
 css       : css bawaan CI (ditambahi dikit :v)
+
+-----------------------------------------------------------------------------
+
+Akhirnya selesai juga, thanks all. hehehe
